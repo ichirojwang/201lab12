@@ -63,7 +63,12 @@ int main() {
                                    "signature3.sig"};
 
   // TODO: Load the public key using PEM_read_PUBKEY
-  EVP_PKEY *pubkey = NULL;
+  // EVP_PKEY *pubkey = NULL;
+  FILE *pub_key_file = fopen("public_key.pem", "rb");
+  if (!pub_key_file) {
+    handle_error("Error opening public key file");
+  }
+  EVP_PKEY *pubkey = PEM_read_PUBKEY(pub_key_file, NULL, NULL, NULL);
 
   // Verify each message
   for (int i = 0; i < 3; i++) {
