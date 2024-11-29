@@ -103,22 +103,5 @@ int verify(const char *message_path, const char *sign_path, EVP_PKEY *pubkey) {
   size_t message_size = read_all_bytes(message_path, message, MAX_FILE_SIZE);
   size_t signature_size = read_all_bytes(sign_path, signature, MAX_FILE_SIZE);
 
-  EVP_MD_CTX *ctx = EVP_MD_CTX_new();
-  if (!ctx) {
-    handle_error("Error creating EVP_MD_CTX");
-  }
-
-  if (!EVP_DigestVerifyInit(ctx, NULL, EVP_sha256(), NULL, pubkey)) {
-    handle_error("Error init EVP_DigestVerify");
-  }
-
-  if (!EVP_DigestVerifyUpdate(ctx, message, message_size)) {
-    handle_error("Error updating EVP_DigestVerify");
-  }
-
-  int result = EVP_DigestVerifyFinal(ctx, signature, signature_size);
-
-  EVP_MD_CTX_free(ctx);
-
-  return result;
+  return -1;
 }
